@@ -5,6 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cecilia's Portfolio</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ---------- Home page only: layered paper look ---------- */
+    .hero-wrap { position: relative; margin: 18px 10px 0 0; }
+    .hero-wrap::before, .hero-wrap::after {
+      content: ""; position: absolute; inset: 0; border-radius: 22px;
+    }
+    .hero-wrap::before { background: var(--pink-deep); transform: translate(14px, 14px) rotate(1.2deg); }
+    .hero-wrap::after  { background: var(--pink-pale); transform: translate(7px, 7px) rotate(-0.6deg); }
+    .hero {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: center;
+      padding: 38px 36px;
+      border-radius: 22px;
+      background: var(--card);
+      border: 2px solid var(--pink);
+    }
+    .hero h1 { margin-bottom: 14px; }
+    .hero p { font-size: 1.06rem; margin: 0 0 20px; }
+    .hero .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hero .tag {
+      font-family: var(--round); font-weight: 500; font-size: 0.9rem;
+      padding: 4px 13px; border-radius: 999px;
+      border: 1.5px solid var(--pink); color: var(--pink-light);
+    }
+    .hero .photo {
+      position: relative; justify-self: center;
+      background: var(--pink-pale); padding: 10px 10px 30px; border-radius: 6px;
+      transform: rotate(3deg);
+      box-shadow: 6px 6px 0 var(--pink-deep);
+      max-width: 260px;
+    }
+    .hero .photo::before {
+      content: ""; position: absolute; top: -12px; left: 50%;
+      width: 90px; height: 22px; transform: translateX(-50%) rotate(-4deg);
+      background: rgba(255, 126, 182, 0.8); border-radius: 3px;
+    }
+    .hero .photo img { border: none; border-radius: 3px; aspect-ratio: 1/1; object-fit: contain; width: 100%; background: #000; padding: 16px; box-sizing: border-box; }
+    .hero .photo span {
+      position: absolute; left: 0; right: 0; bottom: 6px; text-align: center;
+      font-family: var(--round); font-size: 0.85rem; color: #6b4a5b;
+    }
+
+    .section-title { margin-top: 3.2rem; }
+
+    /* explore cards */
+    .explore { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 1rem; }
+    .tile {
+      display: block; text-decoration: none; color: var(--text);
+      background: var(--card); border: 2px solid var(--pink); border-radius: 18px;
+      padding: 22px 22px 20px;
+      box-shadow: 6px 6px 0 var(--pink-deep);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tile:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--pink-deep); color: var(--text); }
+    .tile .icon {
+      width: 46px; height: 46px; border-radius: 12px; margin-bottom: 14px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--pink-pale); color: var(--pink-deep); font-size: 22px;
+    }
+    .tile h3 { font-family: var(--round); font-weight: 600; margin: 0 0 4px; font-size: 1.25rem; color: var(--pink-light); }
+    .tile p { margin: 0; color: var(--muted); font-size: 0.97rem; }
+    .tile .go { display: inline-block; margin-top: 12px; font-family: var(--round); color: var(--pink); font-size: 0.92rem; }
+
+    /* latest posts */
+    .posts { margin-top: 1rem; border-top: 2px dashed var(--border); }
+    .post {
+      display: flex; align-items: center; gap: 18px;
+      text-decoration: none; color: var(--text);
+      padding: 16px 6px; border-bottom: 2px dashed var(--border);
+      transition: padding 0.2s;
+    }
+    .post:hover { padding-left: 14px; color: var(--text); }
+    .post .week {
+      flex: 0 0 auto; width: 56px; height: 56px; border-radius: 14px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: var(--round); font-weight: 600; line-height: 1.05;
+      border: 2px solid var(--pink); color: var(--pink-light);
+      box-shadow: 4px 4px 0 var(--pink-deep);
+    }
+    .post .week small { font-size: 0.65rem; letter-spacing: 0.08em; }
+    .post .week span { font-size: 1.4rem; }
+    .post h3 { font-family: var(--round); font-weight: 500; margin: 0 0 2px; font-size: 1.08rem; }
+    .post p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+    .post .new {
+      margin-left: auto; flex: 0 0 auto;
+      font-family: var(--round); font-size: 0.78rem; font-weight: 600;
+      padding: 4px 13px; border-radius: 999px; background: var(--pink); color: #2a0f1d;
+    }
+
+    @media (max-width: 640px) {
+      .hero { grid-template-columns: 1fr; padding: 30px 22px; }
+      .hero .photo { max-width: 200px; }
+      .post .new { display: none; }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -19,20 +114,68 @@
   </header>
 
   <main class="wrap">
-    <h1>Welcome</h1>
-    <p>
-      This website is my portfolio for the module. Each week I add a short
-      reflection on the workshop task.
-    </p>
+    <div class="hero-wrap">
+      <section class="hero">
+        <div>
+          <h1>Welcome</h1>
+          <p>Hi, I'm Cecilia! This website is my portfolio for the module. Each week I add a short reflection on the workshop task.</p>
+          <div class="tags">
+            <span class="tag">&#9825; Weekly reflections</span>
+            <span class="tag">&#10023; Web scraping</span>
+            <span class="tag">&#9825; Data</span>
+            <span class="tag">&#9834; K-pop lover</span>
+          </div>
+        </div>
+        <div class="photo">
+          <img src="images/home-grid.jpg" alt="Nine photos from my trip to Taeyeon's concert">
+          <span>a lovely concert night &#9825;</span>
+        </div>
+      </section>
+    </div>
 
-    <h2>How to read this site</h2>
-    <ol>
-      <li><a href="about.html">About Me</a> &ndash; a short introduction to me.</li>
-      <li><a href="reflections.html">Weekly Reflections</a> &ndash; click to view my weekly reflections.</li>
-    </ol>
+    <h2 class="section-title">Explore</h2>
+    <div class="explore">
+      <a class="tile" href="about.html">
+        <div class="icon">&#9825;</div>
+        <h3>About Me</h3>
+        <p>A short introduction to me, and the things I love.</p>
+        <span class="go">Read more &rarr;</span>
+      </a>
+      <a class="tile" href="reflections.html">
+        <div class="icon">&#10022;</div>
+        <h3>Weekly Reflections</h3>
+        <p>Click to view all my weekly reflections.</p>
+        <span class="go">See all &rarr;</span>
+      </a>
+    </div>
+      </a>
+    </div>
 
-    <h2>Latest post</h2>
-    <p><a href="week-04.html">Week 4 &ndash; Reflection</a></p>
+    <h2 class="section-title">Latest posts</h2>
+    <div class="posts">
+      <a class="post" href="week-04.html">
+        <div class="week"><small>WEEK</small><span>4</span></div>
+        <div>
+          <h3>Creating a dataset</h3>
+          <p>Our first group project: AI rules at 10 Russell Group universities.</p>
+        </div>
+        <span class="new">New</span>
+      </a>
+      <a class="post" href="week-03.html">
+        <div class="week"><small>WEEK</small><span>3</span></div>
+        <div>
+          <h3>Web scraping with BBC iPlayer</h3>
+          <p>I collected 200 programmes from the iPlayer A&ndash;Z page.</p>
+        </div>
+      </a>
+      <a class="post" href="week-02.html">
+        <div class="week"><small>WEEK</small><span>2</span></div>
+        <div>
+          <h3>Making my first website</h3>
+          <p>Building this site with HTML, CSS and GitHub Pages.</p>
+        </div>
+      </a>
+    </div>
   </main>
 
   <footer>
